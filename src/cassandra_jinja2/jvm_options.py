@@ -75,7 +75,7 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
         :return:
         """
         self.add_jinja_to_comment_option_conditionally(
-            option_pattern=rr'^#(-Xmn)(.*)\n',
+            option_pattern=r'^#(-Xmn)(.*)\n',
             jinja_variable='jvm_options.use_g1_gc')
         self.add_jinja_for_commented_option_with_default_value(
             option_pattern=r'^#(-Xmn)(.*)\n',
