@@ -85,7 +85,7 @@ class CassandraEnvSh(cassandra_jinja2.base_config.BaseConfig):
         LOCAL_JMX=yes
         :return:
         """
-        option_pattern = r'^(\s*LOCAL_JMX=yes)\n'
+        option_pattern = r'^(\s*LOCAL_JMX=)(yes)\n'
         jinja_variable = 'cassandra_env_sh.local_jmx'
         compiled_pattern = re.compile(option_pattern, re.MULTILINE)
         match = compiled_pattern.search(self.content)
@@ -93,7 +93,7 @@ class CassandraEnvSh(cassandra_jinja2.base_config.BaseConfig):
             replacement = '{%- if ' + jinja_variable + ' | default(true) %}\n'
             replacement += match.group(0)
             replacement += '{%- else %}\n'
-            replacement += match.group(1) +'no'
+            replacement += match.group(1) +'no' + '\n'
             replacement += '{%- endif %}\n'
             self.content = compiled_pattern.sub(replacement, self.content)
 
@@ -132,3 +132,4 @@ class CassandraEnvSh(cassandra_jinja2.base_config.BaseConfig):
             replacement += '{%- endif -%}\n'
             replacement += match.group(0)
             self.content = compiled_pattern.sub(replacement, self.content)
+
