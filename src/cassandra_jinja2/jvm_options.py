@@ -70,13 +70,9 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
 
     def heap_newsize(self):
         """
-        It is not recommended to set the young generation size / heap_newsize if using the  G1 GC.
         #-Xmn800M
         :return:
         """
-        self.add_jinja_to_comment_option_conditionally(
-            option_pattern=r'^#(-Xmn)(.*)\n',
-            jinja_variable='jvm_options.use_g1_gc')
         self.add_jinja_for_commented_option_with_default_value(
             option_pattern=r'^#(-Xmn)(.*)\n',
             jinja_variable='jvm_options.heap_newsize')
