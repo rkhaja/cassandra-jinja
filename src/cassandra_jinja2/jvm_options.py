@@ -49,6 +49,7 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
         self.use_gc_log_file_rotation()
         self.number_of_gc_log_files()
         self.gc_log_file_size()
+        self.extra_opts()
 
     def min_heap_size(self):
         """
@@ -376,3 +377,16 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
         self.add_jinja_for_option_with_default_value(
             option_pattern=r'^(-XX:GCLogFileSize=)(.*)\n',
             jinja_variable='jvm_options.gc_log_file_size')
+
+    def extra_opts(self):
+        """
+        :return:
+        """
+        jinja_variable='jvm_options.extra_opts'
+        replacement = '{%- if ' + jinja_variable + ' is defined %}\n'
+        replacement += '### Extra JVM Options\n'
+        replacement += '{%- for opt in ' + jinja_variable + ' %}\n'
+        replacement += '{{ opt }}\n'
+        replacement += '{%- endfor %}\n'
+        replacement += '{%- endif -%}\n'
+        self.content += replacement
