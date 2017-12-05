@@ -692,7 +692,7 @@ class CassandraYaml(cassandra_jinja2.base_config.BaseConfig):
         :return:
         """
         self.add_jinja_for_option_with_default_value(
-            option_pattern=r'^(: )(.*)\n',
+            option_pattern=r'^(index_summary_resize_interval_in_minutes: )(.*)\n',
             jinja_variable='cassandra_yaml.')
 
     def trickle_fsync(self):
