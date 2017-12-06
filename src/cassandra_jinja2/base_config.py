@@ -187,7 +187,6 @@ class BaseConfig(object):
             self.content = compiled_pattern.sub(replacement, self.content)
 
     def add_jinja_to_comment_xml_option(self, option_pattern, jinja_variable):
-        print('In add_jinja_to_comment_xml_option:')
         compiled_pattern = re.compile(option_pattern, re.MULTILINE)
         match = compiled_pattern.search(self.content)
         if match:
