@@ -1,4 +1,5 @@
 import logging
+import re
 
 import cassandra_jinja2.base_config
 
@@ -22,6 +23,7 @@ class LogbackXml(cassandra_jinja2.base_config.BaseConfig):
         super().__init__(cassandra_version)
 
     def generate_template(self):
+        self.shutdown_hook()
         self.systemlog_logdir()
         self.systemlog_rolling_logdir()
         self.systemlog_maxindex()
@@ -36,6 +38,23 @@ class LogbackXml(cassandra_jinja2.base_config.BaseConfig):
         self.appender_asyncdebuglog_enabled()
         self.cassandra_logger_level()
         self.thrift_logger_level()
+
+    def shutdown_hook(self):
+        """
+        <!-- No shutdown hook; we run it ourselves in StorageService after shutdown -->
+        :return:
+        """
+        option_pattern = r'^(\s*)(<!-- No shutdown hook; we run it ourselves in StorageService after shutdown -->)\n'
+        jinja_variable = 'logback_xml.shutdown_hook'
+        compiled_pattern = re.compile(option_pattern, re.MULTILINE)
+        match = compiled_pattern.search(self.content)
+        if match:
+            replacement = '{%- if ' + jinja_variable + ' | default(false) %}\n'
+            replacement += match.group(1) + '<shutdownHook class="{{ ' + jinja_variable + ' }}"/>\n'
+            replacement += '{%- else %}\n'
+            replacement += match.group(0)
+            replacement += '{%- endif %}\n'
+            self.content = compiled_pattern.sub(replacement, self.content)
 
     def systemlog_logdir(self):
         """
@@ -159,7 +178,6 @@ class LogbackXml(cassandra_jinja2.base_config.BaseConfig):
         <appender-ref ref="SYSTEMLOG" />
         :return:
         """
-        print('something')
         self.add_jinja_to_comment_xml_option(
             option_pattern=r'^(\s*)(<appender-ref ref="SYSTEMLOG" />)\n',
             jinja_variable='logback_xml.appender_systemlog_enabled')
