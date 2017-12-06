@@ -185,3 +185,19 @@ class BaseConfig(object):
             replacement += match.group(0)
             replacement += '{%- endif %}\n'
             self.content = compiled_pattern.sub(replacement, self.content)
+
+    def add_jinja_to_comment_xml_option(self, option_pattern, jinja_variable):
+        print('In add_jinja_to_comment_xml_option:')
+        compiled_pattern = re.compile(option_pattern, re.MULTILINE)
+        match = compiled_pattern.search(self.content)
+        if match:
+            replacement = '{%- if ' + jinja_variable + ' | default(true) %}\n'
+            replacement += match.group(0)
+            replacement += '{%- else %}\n'
+            if compiled_pattern.groups == 3:
+                replacement += match.group(1) + '<!-- ' + match.group(2) + ' -->' + match.group(3) + '\n'
+            else:
+                replacement += match.group(1) + '<!-- ' + match.group(2) + ' -->' + '\n'
+            replacement += '{%- endif %}\n'
+            self.content = compiled_pattern.sub(replacement, self.content)
+
