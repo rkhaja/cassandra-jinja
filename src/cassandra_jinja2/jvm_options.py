@@ -33,7 +33,7 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
         self.cms_eden_chunk_record_always()
         self.cms_class_unloading_enabled()
         self.use_g1_gc()
-        self.g1r_set_updating_pause_millis()
+        self.g1r_set_updating_pause_time_percent()
         self.max_gc_pause_millis()
         self.initiating_heap_occupancy_percent()
         self.parallel_gc_threads()
@@ -227,14 +227,14 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
             option_pattern=r'^#(-XX:\+UseG1GC)\n',
             jinja_variable='jvm_options.use_g1_gc')
 
-    def g1r_set_updating_pause_millis(self):
+    def g1r_set_updating_pause_time_percent(self):
         """
         #-XX:G1RSetUpdatingPauseTimePercent=5
         :return:
         """
         self.add_jinja_for_commented_option_with_default_value(
             option_pattern=r'^#(-XX:G1RSetUpdatingPauseTimePercent=)(.*)\n',
-            jinja_variable='jvm_options.g1r_set_updating_pause_millis')
+            jinja_variable='jvm_options.g1r_set_updating_pause_time_percent')
 
     def max_gc_pause_millis(self):
         """
