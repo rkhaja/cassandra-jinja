@@ -27,6 +27,7 @@ class CassandraEnvSh(cassandra_jinja2.base_config.BaseConfig):
         self.local_jmx()
         self.jmx_port()
         self.jmxremote_authenticate()
+        self.jmxremote_password_file()
         self.jvm_extra_opts()
 
     def log_gc(self):
@@ -114,6 +115,15 @@ class CassandraEnvSh(cassandra_jinja2.base_config.BaseConfig):
         self.add_jinja_for_option_with_default_value(
             option_pattern=r'^(\s*JVM_OPTS="\$JVM_OPTS -Dcom.sun.management.jmxremote.authenticate=)(.*)(")\n',
             jinja_variable='cassandra_env_sh.jmxremote_authenticate')
+
+    def jmxremote_password_file(self):
+        """
+        JVM_OPTS="$JVM_OPTS -Dcom.sun.management.jmxremote.password.file=/etc/cassandra/jmxremote.password"
+        :return:
+        """
+        self.add_jinja_for_option_with_default_value(
+            option_pattern=r'^(\s*JVM_OPTS="\$JVM_OPTS -Dcom.sun.management.jmxremote.password.file=)(.*)(")\n',
+            jinja_variable='cassandra_env_sh.jmxremote_password_file')
 
     def jvm_extra_opts(self):
         """
