@@ -953,7 +953,7 @@ class CassandraYaml(cassandra_jinja2.base_config.BaseConfig):
         :return:
         """
         self.add_jinja_for_commented_option_with_no_default_value(
-            option_pattern=r'^# (pc_recv_buff_size_in_bytes:)\n',
+            option_pattern=r'^# (rpc_recv_buff_size_in_bytes:)\n',
             jinja_variable='cassandra_yaml.pc_recv_buff_size_in_bytes')
 
     def internode_send_buff_size_in_bytes(self):
