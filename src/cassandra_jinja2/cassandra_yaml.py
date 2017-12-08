@@ -373,12 +373,12 @@ class CassandraYaml(cassandra_jinja2.base_config.BaseConfig):
         match = compiled_pattern.search(self.content)
         if match:
             replacement = match.group(0)
-            replacement += '{%- if ' + jinja_variable + ' is defined -%}\n'
+            replacement += '{%- if ' + jinja_variable + ' is defined %}\n'
             replacement += 'data_file_directories:\n'
             replacement += '{%- for dir in ' + jinja_variable + ' %}\n'
             replacement += '    - {{ dir }}\n'
-            replacement += '{%- endfor -%}\n'
-            replacement += '{% endif %}\n'
+            replacement += '{%- endfor %}\n'
+            replacement += '{%- endif %}\n'
             self.content = compiled_pattern.sub(replacement, self.content)
 
     def commitlog_directory(self):
