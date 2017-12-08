@@ -372,7 +372,7 @@ class CassandraYaml(cassandra_jinja2.base_config.BaseConfig):
         compiled_pattern = re.compile(option_pattern, re.MULTILINE)
         match = compiled_pattern.search(self.content)
         if match:
-            replacement = match.group(0)
+            replacement = match.group(0) + '\n'
             replacement += '{%- if ' + jinja_variable + ' is defined %}\n'
             replacement += 'data_file_directories:\n'
             replacement += '{%- for dir in ' + jinja_variable + ' %}\n'
