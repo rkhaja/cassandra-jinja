@@ -347,7 +347,7 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
         :return:
         """
         self.add_jinja_for_commented_option_with_default_value(
-            option_pattern=r'^#(-Xloggc:)(.*)\n',
+            option_pattern=r'^#(-Xloggc:)(.*)(/gc.log)\n',
             jinja_variable='jvm_options.log_gc')
 
     def use_gc_log_file_rotation(self):
