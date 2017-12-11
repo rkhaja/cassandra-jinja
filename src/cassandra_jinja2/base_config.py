@@ -172,7 +172,7 @@ class BaseConfig(object):
             replacement = match.group(0)
             replacement += '{% if ' + jinja_variable + ' | default(false) -%}\n'
             replacement += match.group(1) + '\n'
-            replacement += '{%- endif %}\n'
+            replacement += '{%- endif -%}\n'
             self.content = compiled_pattern.sub(replacement, self.content)
 
     def add_jinja_to_comment_option_conditionally(self, option_pattern, jinja_variable):
