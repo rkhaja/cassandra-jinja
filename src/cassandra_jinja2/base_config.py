@@ -170,7 +170,7 @@ class BaseConfig(object):
         match = compiled_pattern.search(self.content)
         if match:
             replacement = match.group(0)
-            replacement += '{%- if ' + jinja_variable + ' | default(false) -%}\n'
+            replacement += '{% if ' + jinja_variable + ' | default(false) -%}\n'
             replacement += match.group(1) + '\n'
             replacement += '{%- endif %}\n'
             self.content = compiled_pattern.sub(replacement, self.content)
