@@ -63,7 +63,7 @@ class LogbackXml(cassandra_jinja2.base_config.BaseConfig):
         """
         self.add_jinja_for_option_with_default_value(
             option_pattern=r'^(\s*<file>)(.*)(/system.log</file>)\n',
-            jinja_variable='logback_xml.systemlog_logdir')
+            jinja_variable='logback_xml.logdir')
 
     def systemlog_rolling_logdir(self):
         """
@@ -72,7 +72,7 @@ class LogbackXml(cassandra_jinja2.base_config.BaseConfig):
         """
         self.add_jinja_for_option_with_default_value(
             option_pattern=r'^(\s*<fileNamePattern>)(.*)(/system.log.%i.zip</fileNamePattern>)\n',
-            jinja_variable='logback_xml.systemlog_rolling_logdir')
+            jinja_variable='logback_xml.logdir')
 
     def systemlog_maxindex(self):
         """
@@ -117,7 +117,7 @@ class LogbackXml(cassandra_jinja2.base_config.BaseConfig):
         """
         self.add_jinja_for_option_with_default_value(
             option_pattern=r'^(\s*<file>)(.*)(/debug.log</file>)\n',
-            jinja_variable='logback_xml.debuglog_logdir')
+            jinja_variable='logback_xml.logdir')
 
     def debuglog_rolling_logdir(self):
         """
@@ -126,7 +126,7 @@ class LogbackXml(cassandra_jinja2.base_config.BaseConfig):
         """
         self.add_jinja_for_option_with_default_value(
             option_pattern=r'^(\s*<fileNamePattern>)(.*)(/debug.log.%i.zip</fileNamePattern>)\n',
-            jinja_variable='logback_xml.debuglog_rolling_logdir')
+            jinja_variable='logback_xml.logdir')
 
     def debuglog_maxindex(self):
         """

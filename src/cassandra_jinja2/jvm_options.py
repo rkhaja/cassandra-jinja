@@ -45,7 +45,7 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
         self.print_gc_application_stopped_time()
         self.print_promotion_failure()
         self.print_fls_statistics()
-        self.log_gc()
+        self.gc_logdir()
         self.use_gc_log_file_rotation()
         self.number_of_gc_log_files()
         self.gc_log_file_size()
@@ -341,14 +341,14 @@ class JvmOptions(cassandra_jinja2.base_config.BaseConfig):
             option_pattern=r'^#(-XX:PrintFLSStatistics=)(.*)\n',
             jinja_variable='jvm_options.print_fls_statistics')
 
-    def log_gc(self):
+    def gc_logdir(self):
         """
         #-Xloggc:/var/log/cassandra/gc.log
         :return:
         """
         self.add_jinja_for_commented_option_with_default_value(
             option_pattern=r'^#(-Xloggc:)(.*)(/gc.log)\n',
-            jinja_variable='jvm_options.log_gc')
+            jinja_variable='jvm_options.gc_logdir')
 
     def use_gc_log_file_rotation(self):
         """

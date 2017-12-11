@@ -19,7 +19,7 @@ class CassandraEnvSh(cassandra_jinja2.base_config.BaseConfig):
         super().__init__(cassandra_version)
 
     def generate_template(self):
-        self.log_gc()
+        self.gc_logdir()
         self.max_heap_size()
         self.heap_newsize()
         self.malloc_arena_max()
@@ -30,14 +30,14 @@ class CassandraEnvSh(cassandra_jinja2.base_config.BaseConfig):
         self.jmxremote_password_file()
         self.jvm_extra_opts()
 
-    def log_gc(self):
+    def gc_logdir(self):
         """
         JVM_OPTS="$JVM_OPTS -Xloggc:${CASSANDRA_HOME}/logs/gc.log"
         :return:
         """
         self.add_jinja_for_option_with_default_value(
             option_pattern=r'^(JVM_OPTS="\$JVM_OPTS -Xloggc:)(.*)(/gc.log")\n',
-            jinja_variable='cassandra_env_sh.log_gc')
+            jinja_variable='cassandra_env_sh.gc_logdir')
 
     def max_heap_size(self):
         """
